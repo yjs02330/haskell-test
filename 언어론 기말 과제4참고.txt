@@ -1,0 +1,33 @@
+expr0 : (가장 잘 달라붙어 있는 수식)
+- 123이나 x같은 더 이상 쪼개지지 않는
+- 괄호로 묶어 놓은 수식
+
+expr1 : (달라붙는 우선순위가 한 단계 낮은) +로 0번 이상 연결된(expr0도 포함)
+
+전체 분석하고 싶은수식 expr
+BNF
+<expr> ::= <expr1>
+
+<expr> ::= 	<var>
+		| <integer>
+		| "(" expr ")"
+
+<expr1> ::= <expr0>
+		| <expr0> "^" <expr1>
+
+<expr2> ::= <expr1>
+		| <expr1> "*" <expr2>
+
+<expr3> ::= <expr2>
+		| <expr2> "+" <expr3>
+
+
+파서컴비네이터
+expr0 = var
+	<|> integer
+	<|> (lp 다음에 expr rp )
+
+expr1 = expr0 다음에 many ( "+" <expr0>)
+
+
+
